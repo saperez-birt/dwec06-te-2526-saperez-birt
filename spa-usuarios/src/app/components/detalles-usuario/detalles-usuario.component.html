@@ -1,0 +1,74 @@
+<div class="container mt-4 p-4">
+	<ng-container *ngIf="!cargando; else cargandoTemplate">
+		<ng-container *ngIf="!error; else errorTemplate">
+			<ng-container *ngIf="usuario; else emptyTemplate">
+				<div class="usuario-detail">
+					<div class="usuario-header">
+						<h1 class="usuario-name">Usuario {{ usuario.id }}</h1>
+					</div>
+
+					<div class="usuario-content">
+						<div class="usuario-avatar">
+							<img *ngIf="usuario.avatar" 
+								[src]="usuario.avatar" 
+								[alt]="usuario.nombre + ' ' + usuario.apellido"
+								loading="lazy">
+							<div *ngIf="!usuario.avatar" class="avatar-placeholder">
+								<span>No image</span>
+							</div>
+						</div>
+
+						<div class="usuario-info">
+							<div class="info-grid">
+								<div class="info-item">
+									<span class="info-label">Nombre</span>
+									<span class="info-value">{{ usuario.nombre }}</span>
+								</div>
+								<div class="info-item">
+									<span class="info-label">Apellido</span>
+									<span class="info-value">{{ usuario.apellido }}</span>
+								</div>
+								<div class="info-item">
+									<span class="info-label">Email</span>
+									<span class="info-value">{{ usuario.email }}</span>
+								</div>
+							</div>
+
+							<div class="usuario-actions">
+								<button class="btn-editar" (click)="editar()">
+									Editar
+								</button>
+								<button class="btn-eliminar" (click)="eliminar()">
+									Eliminar
+								</button>
+								<a routerLink="/usuarios" class="btn-volver">
+									Volver
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</ng-container>
+		</ng-container>
+	</ng-container>
+
+	<ng-template #cargandoTemplate>
+		<div class="loading-container">
+			<div class="spinner"></div>
+			<span>Cargando detalles...</span>
+		</div>
+	</ng-template>
+
+	<ng-template #errorTemplate>
+		<div class="error-alert">
+			{{ error }}
+			<button type="button" class="btn-close">&times;</button>
+		</div>
+	</ng-template>
+
+	<ng-template #emptyTemplate>
+		<div class="empty-state">
+			<p>Usuario no encontrado</p>
+		</div>
+	</ng-template>
+</div>

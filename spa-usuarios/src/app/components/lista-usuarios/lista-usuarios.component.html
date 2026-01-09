@@ -1,0 +1,47 @@
+<!-- lista-usuarios.component.html -->
+<div class="container mt-4">
+    <h2 class="mb-4">Lista de Usuarios</h2>
+
+    <ng-container *ngIf="!cargando; else cargandoTemplate">
+        <ng-container *ngIf="!error; else errorTemplate">
+            <ng-container *ngIf="usuarios.length > 0; else emptyTemplate">
+                <div class="usuarios-grid">
+                    <div class="usuario-card" *ngFor="let usuario of usuarios">
+                        <div class="usuario-image">
+                            <img 
+                            [src]="usuario.avatar" 
+                            [alt]="usuario.nombre + ' ' + usuario.apellido"
+                            loading="lazy">
+                        </div>
+                        <div class="usuario-info">
+                            <h6 class="usuario-name">{{ usuario.nombre }} {{ usuario.apellido }}</h6>
+                            <a [routerLink]="['/usuario', usuario.id]" class="btn-detalles">
+                            Ver detalles
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </ng-container>
+        </ng-container>
+    </ng-container>
+
+    <ng-template #cargandoTemplate>
+        <div class="loading-container">
+            <div class="spinner"></div>
+            <span>Cargando usuarios...</span>
+        </div>
+    </ng-template>
+
+    <ng-template #errorTemplate>
+        <div class="error-alert">
+            {{ error }}
+            <button type="button" class="btn-close" (click)="cerrarError()">&times;</button>
+        </div>
+    </ng-template>
+
+    <ng-template #emptyTemplate>
+        <div class="empty-state">
+            <p>No hay usuarios disponibles</p>
+        </div>
+    </ng-template>
+</div>
